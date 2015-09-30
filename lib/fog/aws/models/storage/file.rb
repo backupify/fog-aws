@@ -21,9 +21,9 @@ module Fog
         attribute :metadata
         attribute :owner,               :aliases => 'Owner'
         attribute :storage_class,       :aliases => ['x-amz-storage-class', 'X-Amz-Storage-Class', 'StorageClass']
-        attribute :encryption,          :aliases => 'x-amz-server-side-encryption'
-        attribute :encryption_key,      :aliases => 'x-amz-server-side-encryption-customer-key'
-        attribute :version,             :aliases => 'x-amz-version-id'
+        attribute :encryption,          :aliases => ['x-amz-server-side-encryption', 'X-Amz-Server-Side-Encryption']
+        attribute :encryption_key,      :aliases => ['x-amz-server-side-encryption-customer-key', 'X-Amz-Server-Side-Encryption-Customer-Key']
+        attribute :version,             :aliases => ['x-amz-version-id', 'X-Amz-Version-Id']
 
         # @note Chunk size to use for multipart uploads.
         #     Use small chunk sizes to minimize memory. E.g. 5242880 = 5mb
@@ -115,7 +115,7 @@ module Fog
 
         remove_method :metadata
         def metadata
-          attributes.reject {|key, value| !(key.to_s =~ /^x-amz-/)}
+          attributes.reject {|key, value| !(key.to_s =~ /^x-amz-/i)}
         end
 
         remove_method :metadata=
